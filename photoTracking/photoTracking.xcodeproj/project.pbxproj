@@ -14,6 +14,9 @@
 		50BD58C529F6D94200D3C8E2 /* photoTrackingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD58C429F6D94200D3C8E2 /* photoTrackingTests.swift */; };
 		50BD58CF29F6D94200D3C8E2 /* photoTrackingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD58CE29F6D94200D3C8E2 /* photoTrackingUITests.swift */; };
 		50BD58D129F6D94200D3C8E2 /* photoTrackingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD58D029F6D94200D3C8E2 /* photoTrackingUITestsLaunchTests.swift */; };
+		50BD58DE29F6D9A600D3C8E2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD58DD29F6D9A600D3C8E2 /* APIService.swift */; };
+		50BD58E029F6DDC800D3C8E2 /* FlickrImageSearchResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD58DF29F6DDC800D3C8E2 /* FlickrImageSearchResponseModel.swift */; };
+		50BD58E229F6F5B400D3C8E2 /* PhotoTrackingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD58E129F6F5B400D3C8E2 /* PhotoTrackingViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		50BD58CA29F6D94200D3C8E2 /* photoTrackingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = photoTrackingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50BD58CE29F6D94200D3C8E2 /* photoTrackingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoTrackingUITests.swift; sourceTree = "<group>"; };
 		50BD58D029F6D94200D3C8E2 /* photoTrackingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoTrackingUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		50BD58DD29F6D9A600D3C8E2 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		50BD58DF29F6DDC800D3C8E2 /* FlickrImageSearchResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrImageSearchResponseModel.swift; sourceTree = "<group>"; };
+		50BD58E129F6F5B400D3C8E2 /* PhotoTrackingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTrackingViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +104,9 @@
 				50BD58B529F6D93E00D3C8E2 /* ContentView.swift */,
 				50BD58B729F6D94100D3C8E2 /* Assets.xcassets */,
 				50BD58B929F6D94100D3C8E2 /* Preview Content */,
+				50BD58DD29F6D9A600D3C8E2 /* APIService.swift */,
+				50BD58DF29F6DDC800D3C8E2 /* FlickrImageSearchResponseModel.swift */,
+				50BD58E129F6F5B400D3C8E2 /* PhotoTrackingViewModel.swift */,
 			);
 			path = photoTracking;
 			sourceTree = "<group>";
@@ -259,6 +268,9 @@
 			files = (
 				50BD58B629F6D93E00D3C8E2 /* ContentView.swift in Sources */,
 				50BD58B429F6D93E00D3C8E2 /* photoTrackingApp.swift in Sources */,
+				50BD58E229F6F5B400D3C8E2 /* PhotoTrackingViewModel.swift in Sources */,
+				50BD58DE29F6D9A600D3C8E2 /* APIService.swift in Sources */,
+				50BD58E029F6DDC800D3C8E2 /* FlickrImageSearchResponseModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

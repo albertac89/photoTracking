@@ -28,16 +28,17 @@ final class APIService {
     }
 }
 
-extension APIService {
+extension APIService: APIServiceProtocol {
     /// Search images from a location
     ///
     /// - Parameters:
     ///     - lat: Latitude`.
     ///     - lon: Longitude`.
     ///     - radius: Radius off the location in km`.
-    func fetchImages(lat: Double, lon: Double, radius: Float = 0.1) -> AnyPublisher<[FlickrImage], Error> {
+    func fetchImages(lat: Double, lon: Double) -> AnyPublisher<[FlickrImage], Error> {
         let method = "flickr.photos.search"
         let accuracy = 16
+        let radius = 0.1
         let radius_units = "km"
         guard var urlComp = URLComponents(string: host) else {
             return Fail(error: APIError.invalidUrl).eraseToAnyPublisher()

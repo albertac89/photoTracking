@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
+    let viewModel = PhotoTrackingViewModel(service: APIService(client: URLSession.shared))
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -16,6 +18,7 @@ struct ContentView: View {
             Text("Hello, world!")
         }
         .padding()
+        .onAppear(perform: viewModel.fetchImages)
     }
 }
 
