@@ -11,7 +11,7 @@ import SwiftUI
 struct photoTrackingApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView(viewModel: PhotoTrackingViewModel(service: APIService(client: URLSession.shared), locationDataManager: LocationDataManager()))
         }
     }
 }

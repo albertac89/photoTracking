@@ -1,0 +1,44 @@
+{
+    "photos": {
+        "page": 1,
+        "pages": 1,
+        "perpage": 250,
+        "total": 3,
+        "photo": [
+            {
+                "id": "0",
+                "owner": "owner0",
+                "secret": "secret0",
+                "server": "server0",
+                "farm": 0,
+                "title": "titleService0",
+                "ispublic": 1,
+                "isfriend": 0,
+                "isfamily": 0
+            },
+            {
+                "id": "1",
+                "owner": "owner1",
+                "secret": "secret1",
+                "server": "server1",
+                "farm": 1,
+                "title": "titleService1",
+                "ispublic": 1,
+                "isfriend": 0,
+                "isfamily": 0
+            },
+            {
+                "id": "2",
+                "owner": "owner2",
+                "secret": "secret2",
+                "server": "server2",
+                "farm": 2,
+                "title": "titleService2",
+                "ispublic": 1,
+                "isfriend": 0,
+                "isfamily": 0
+            }
+        ]
+    },
+    "stat": "ok"
+}

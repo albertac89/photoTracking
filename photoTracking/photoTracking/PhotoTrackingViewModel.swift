@@ -6,39 +6,108 @@
 //
 
 import Combine
+import Foundation
+import CoreLocation
 
-protocol PhotoTrackingViewModelProtocol {
-    func fetchImages()
+protocol PhotoTrackingViewModelProtocol: ObservableObject {
+    var photoList: [FlickrImage] { get }
+    var buttonText: String { get }
+    func toggleTracking()
 }
 
 class PhotoTrackingViewModel {
+    @Published var photoList = [FlickrImage]()
+    @Published var buttonText: String = "Start"
+    private var isTracking = false
     private var service: APIServiceProtocol
+    private var locationDataManager: LocationDataManagerProtocol
     private var subscribers = Set<AnyCancellable>()
     
     /// PhotoTracking view model
     ///
     /// - Parameters:
-    ///     - service: Api service`.
-    init(service: APIServiceProtocol) {
+    ///     - service: Api service.
+    init(service: APIServiceProtocol, locationDataManager: LocationDataManagerProtocol) {
         self.service = service
+        self.locationDataManager = locationDataManager
+        self.bind(to: locationDataManager)
+    }
+
+    deinit {
+        unbind()
     }
 }
 
 extension PhotoTrackingViewModel: PhotoTrackingViewModelProtocol {
-    /// Get images
-    func fetchImages() {
-        service.fetchImages(lat: 37.337716, lon: -122.009229)
+    /// Toggle button action to activate or desactivate the location tracking
+    func toggleTracking() {
+        if isTracking {
+            locationDataManager.stopTracking()
+            isTracking = false
+        } else {
+            isTracking = locationDataManager.startTracking()
+        }
+        buttonText = isTracking ? "Stop" : "Start"
+    }
+
+    /// Get images from a coordinate
+    ///
+    /// - Parameters:
+    ///     - coordinate: Lat, Lon.
+    func fetchImages(with coordinate: CLLocationCoordinate2D) {
+        service.fetchImages(lat: coordinate.latitude, lon: coordinate.longitude)
             .sink { completion in
                 switch completion {
                 case .finished:
                     break
                 case .failure(let error):
-                    print(error)
+                    print(error.localizedDescription)
                     break
                 }
         } receiveValue: { images in
-            print(images)
+            self.addPhotos(images: images)
         }
         .store(in: &subscribers)
+    }
+    
+    /// Load images to the list
+    ///
+    /// - Parameters:
+    ///     - images: Images to be added.
+    func addPhotos(images: [FlickrImage]) {
+        images.forEach { newImage in
+            if !photoList.contains(where: { $0.id == newImage.id }) {
+                photoList.insert(newImage, at: 0)
+            }
+        }
+    }
+    
+    /// Binds the locationDataManager to the view model to handle the changes
+    ///
+    /// - Parameters:
+    ///     - locationDataManager: injected dependecy to bind.
+    func bind(to locationDataManager: LocationDataManagerProtocol) {
+        locationDataManager.signal
+            .sink { [weak self] in self?.handle(state: $0) }
+            .store(in: &subscribers)
+    }
+
+    /// Remove the subscribers
+    func unbind() {
+        subscribers.removeAll()
+    }
+
+    /// Handles the location data manager changes that affects this view model
+    ///
+    /// - Parameters:
+    ///     - state: action to be performed.
+    func handle(state: LocationDataManagerEventState) {
+        switch state {
+        case .newLocation(let coordinate):
+            print(coordinate)
+            fetchImages(with: coordinate)
+        case .failure(let error):
+            print(error)
+        }
     }
 }

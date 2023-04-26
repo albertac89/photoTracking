@@ -60,24 +60,48 @@ extension APIService: APIServiceProtocol {
         
         return client.dataTaskPublisher(for: url)
             .tryMap { (data: Data, response: URLResponse) in
-                //try self.handleErrors(data: data, response: response)
+                try self.handleErrors(data: data, response: response)
                 return data
             }
             .decode(type: FlickrImageSearchResponse.self, decoder: JSONDecoder())
             .map { $0.photos.photo }
-            .share()
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 }
 
+private extension APIService {
+    /// Checks whether there is an error with the service response and throws an error if needed.
+    ///
+    /// - Parameters:
+    ///     - data: The `Data`from the service.
+    ///     - response: `URLResponse` from the service.
+    func handleErrors(data: Data, response: URLResponse) throws {
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw APIError.invalidResponse
+        }
+        
+        let decoder = JSONDecoder()
+        let apiError = try? decoder.decode(ErrorResponseModel.self, from: data)
+        if let error = apiError, error.stat == "fail" {
+            throw APIError.errorMessage(error.message)
+        }
+    }
+}
+
 enum APIError: LocalizedError {
     case invalidUrl
+    case invalidResponse
+    case errorMessage(String)
     
     var errorDescription: String? {
         switch self {
         case .invalidUrl:
             return "Invalid URL"
+        case .invalidResponse:
+            return "Invalid response"
+        case .errorMessage(let message):
+            return message
         }
     }
 }
