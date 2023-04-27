@@ -19,5 +19,3 @@ struct ImageViewCell: View {
         }
     }
 }
-
-extension UIImage {}

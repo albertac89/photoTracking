@@ -58,7 +58,6 @@
 		50BD58DF29F6DDC800D3C8E2 /* FlickrImageSearchResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrImageSearchResponseModel.swift; sourceTree = "<group>"; };
 		50BD58E129F6F5B400D3C8E2 /* PhotoTrackingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTrackingViewModel.swift; sourceTree = "<group>"; };
 		50BD58E629F7269A00D3C8E2 /* LocationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataManager.swift; sourceTree = "<group>"; };
-		50BD58E829F7304600D3C8E2 /* locationSim.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = locationSim.gpx; sourceTree = "<group>"; };
 		50E60DFC29F8069400AC5226 /* ErrorResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponseModel.swift; sourceTree = "<group>"; };
 		50E60DFF29F8174A00AC5226 /* PhotoTrackingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTrackingViewModelTests.swift; sourceTree = "<group>"; };
 		50E60E0229F817F900AC5226 /* ApiServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiServiceMock.swift; sourceTree = "<group>"; };
@@ -69,6 +68,7 @@
 		50E60E0C29F8230C00AC5226 /* URLProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolMock.swift; sourceTree = "<group>"; };
 		50E60E0F29F8243700AC5226 /* photos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = photos.json; sourceTree = "<group>"; };
 		50E60E1129F8295900AC5226 /* MainViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewUITests.swift; sourceTree = "<group>"; };
+		50E60E1729FAC62200AC5226 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +108,6 @@
 		50BD58A729F6D93E00D3C8E2 = {
 			isa = PBXGroup;
 			children = (
-				50BD58E829F7304600D3C8E2 /* locationSim.gpx */,
 				50BD58B229F6D93E00D3C8E2 /* photoTracking */,
 				50BD58C329F6D94200D3C8E2 /* photoTrackingTests */,
 				50BD58CD29F6D94200D3C8E2 /* photoTrackingUITests */,
@@ -129,6 +128,7 @@
 		50BD58B229F6D93E00D3C8E2 /* photoTracking */ = {
 			isa = PBXGroup;
 			children = (
+				50E60E1729FAC62200AC5226 /* Info.plist */,
 				50E60DFE29F807D000AC5226 /* Models */,
 				500AF3DE29F7D4FA00782ABB /* Views */,
 				50BD58B329F6D93E00D3C8E2 /* photoTrackingApp.swift */,
@@ -501,8 +501,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"photoTracking/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = photoTracking/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App needs to access your location";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -530,8 +530,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"photoTracking/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = photoTracking/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App needs to access your location";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

@@ -49,7 +49,9 @@ extension PhotoTrackingViewModel: PhotoTrackingViewModelProtocol {
         }
         buttonText = isTracking ? "Stop" : "Start"
     }
+}
 
+private extension PhotoTrackingViewModel {
     /// Get images from a coordinate
     ///
     /// - Parameters:
@@ -64,13 +66,13 @@ extension PhotoTrackingViewModel: PhotoTrackingViewModelProtocol {
                     print(error.localizedDescription)
                     break
                 }
-        } receiveValue: { images in
-            self.addPhotos(images: images)
-        }
-        .store(in: &subscribers)
+            } receiveValue: { images in
+                self.addPhotos(images: images)
+            }
+            .store(in: &subscribers)
     }
-    
-    /// Load images to the list
+
+    /// Load images to the list avoiding duplicates
     ///
     /// - Parameters:
     ///     - images: Images to be added.
@@ -81,7 +83,7 @@ extension PhotoTrackingViewModel: PhotoTrackingViewModelProtocol {
             }
         }
     }
-    
+
     /// Binds the locationDataManager to the view model to handle the changes
     ///
     /// - Parameters:
