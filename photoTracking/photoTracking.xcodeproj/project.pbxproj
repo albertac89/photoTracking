@@ -26,6 +26,8 @@
 		50E60E0D29F8230C00AC5226 /* URLProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E60E0C29F8230C00AC5226 /* URLProtocolMock.swift */; };
 		50E60E1029F8243700AC5226 /* photos.json in Resources */ = {isa = PBXBuildFile; fileRef = 50E60E0F29F8243700AC5226 /* photos.json */; };
 		50E60E1229F8295900AC5226 /* MainViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E60E1129F8295900AC5226 /* MainViewUITests.swift */; };
+		50E60E1D29FADE4E00AC5226 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E60E1C29FADE4E00AC5226 /* ImageModel.swift */; };
+		50E60E2229FB125900AC5226 /* photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50E60E2129FB125900AC5226 /* photo.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,8 @@
 		50E60E0F29F8243700AC5226 /* photos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = photos.json; sourceTree = "<group>"; };
 		50E60E1129F8295900AC5226 /* MainViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewUITests.swift; sourceTree = "<group>"; };
 		50E60E1729FAC62200AC5226 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		50E60E1C29FADE4E00AC5226 /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
+		50E60E2129FB125900AC5226 /* photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +176,7 @@
 			children = (
 				50BD58DF29F6DDC800D3C8E2 /* FlickrImageSearchResponseModel.swift */,
 				50E60DFC29F8069400AC5226 /* ErrorResponseModel.swift */,
+				50E60E1C29FADE4E00AC5226 /* ImageModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -179,6 +184,7 @@
 		50E60E0129F8179D00AC5226 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				50E60E2029FB11F200AC5226 /* Photos */,
 				50E60E0E29F8242D00AC5226 /* Jsons */,
 				50E60E0229F817F900AC5226 /* ApiServiceMock.swift */,
 				50E60E0429F8188E00AC5226 /* FlickrImageMock.swift */,
@@ -195,6 +201,14 @@
 				50E60E0F29F8243700AC5226 /* photos.json */,
 			);
 			path = Jsons;
+			sourceTree = "<group>";
+		};
+		50E60E2029FB11F200AC5226 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				50E60E2129FB125900AC5226 /* photo.jpg */,
+			);
+			path = Photos;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,6 +324,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50E60E2229FB125900AC5226 /* photo.jpg in Resources */,
 				50E60E1029F8243700AC5226 /* photos.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,6 +347,7 @@
 				50BD58B429F6D93E00D3C8E2 /* photoTrackingApp.swift in Sources */,
 				50BD58E229F6F5B400D3C8E2 /* PhotoTrackingViewModel.swift in Sources */,
 				50BD58DE29F6D9A600D3C8E2 /* APIService.swift in Sources */,
+				50E60E1D29FADE4E00AC5226 /* ImageModel.swift in Sources */,
 				50BD58E729F7269A00D3C8E2 /* LocationDataManager.swift in Sources */,
 				50E60DFD29F8069400AC5226 /* ErrorResponseModel.swift in Sources */,
 				500AF3DD29F7D4A600782ABB /* ImageViewCell.swift in Sources */,

@@ -10,6 +10,7 @@ import Foundation
 
 protocol APIServiceProtocol {
     func fetchImages(lat: Double, lon: Double) -> AnyPublisher<[FlickrImage], Error>
+    func downloadImagePublisher(fetchImagesPublisher: AnyPublisher<[FlickrImage], Error>) -> AnyPublisher<Publishers.Collect<Publishers.MergeMany<AnyPublisher<ImageModel, any Error>>>.Output, any Error>
 }
 
 final class APIService {
@@ -32,9 +33,9 @@ extension APIService: APIServiceProtocol {
     /// Search images from a location
     ///
     /// - Parameters:
-    ///     - lat: Latitude`.
-    ///     - lon: Longitude`.
-    ///     - radius: Radius off the location in km`.
+    ///     - lat: Latitude.
+    ///     - lon: Longitude.
+    ///     - radius: Radius off the location in km.
     func fetchImages(lat: Double, lon: Double) -> AnyPublisher<[FlickrImage], Error> {
         let method = "flickr.photos.search"
         let accuracy = 16
@@ -65,12 +66,46 @@ extension APIService: APIServiceProtocol {
             }
             .decode(type: FlickrImageSearchResponse.self, decoder: JSONDecoder())
             .map { $0.photos.photo }
-            .receive(on: DispatchQueue.main)
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
+
+    /// Creates a publisher
+    ///
+    /// - Parameters:
+    ///     - fetchImagesPublisher: The publisher that got the images data.
+    func downloadImagePublisher(fetchImagesPublisher: AnyPublisher<[FlickrImage], Error>) -> AnyPublisher<Publishers.Collect<Publishers.MergeMany<AnyPublisher<ImageModel, any Error>>>.Output, any Error> {
+        return fetchImagesPublisher
+            .flatMap { images in
+                return Publishers.Zip(Just(images).setFailureType(to: Error.self),
+                                      Publishers.MergeMany(images.map { self.downloadImage(for: $0) }).collect())
+            }
+            .map {
+                return $0.1
+            }
             .eraseToAnyPublisher()
     }
 }
 
 private extension APIService {
+    /// Downloads an image from an url
+    ///
+    /// - Parameters:
+    ///     - image: An image with all the necesary data to be downloaded.
+    func downloadImage(for image: FlickrImage) -> AnyPublisher<ImageModel, Error> {
+        guard let stringUrl = image.url?.absoluteString, let url = URL(string: stringUrl) else {
+            return Fail(error: APIError.invalidUrl).eraseToAnyPublisher()
+        }
+        return client.dataTaskPublisher(for: url)
+            .tryMap { (data: Data, response: URLResponse) in
+                try self.handleErrors(data: data, response: response)
+                return data
+            }
+            .compactMap { ImageModel(id: image.id, imageData: $0, title: image.title) }
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
+
     /// Checks whether there is an error with the service response and throws an error if needed.
     ///
     /// - Parameters:

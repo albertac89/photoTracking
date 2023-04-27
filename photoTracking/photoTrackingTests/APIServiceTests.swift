@@ -26,6 +26,7 @@ final class APIServiceTests: XCTestCase {
 
     override func tearDownWithError() throws {
         sut = nil
+        cancellables = []
     }
     
     func test_fetchImages() throws {
@@ -43,5 +44,26 @@ final class APIServiceTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
         
         XCTAssertEqual(photos, FlickrImageMock.arrayService)
+    }
+    
+    func test_downloadImagePublisher() throws {
+        //https://farm2.staticflickr.com/1526/24947572265_43208b06a0.jpg
+        //staticflickr
+        //cridar al la url aqui directament amb urlsession del apiservice i veure com arreglau
+        let sut = try XCTUnwrap(sut)
+        let expectation = XCTestExpectation()
+        let fetchImagesPublisher = sut.fetchImages(lat: LocationDataManagerMock.coordinate.latitude, lon: LocationDataManagerMock.coordinate.longitude)
+        
+        var photos = [ImageModel]()
+        sut.downloadImagePublisher(fetchImagesPublisher: fetchImagesPublisher)
+            .sink { completion in
+                expectation.fulfill()
+            } receiveValue: { photosMock in
+                photos = photosMock
+            }.store(in: &cancellables)
+        
+        wait(for: [expectation], timeout: 5)
+        
+        XCTAssertEqual(photos, ImageModelMock.arrayService)
     }
 }

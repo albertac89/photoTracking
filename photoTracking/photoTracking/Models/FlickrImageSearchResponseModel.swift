@@ -15,7 +15,7 @@ struct Photos: Codable {
     let photo: [FlickrImage]
 }
 
-struct FlickrImage: Codable, Hashable {
+struct FlickrImage: Codable, Equatable {
     let id: String
     let secret: String
     let server: String

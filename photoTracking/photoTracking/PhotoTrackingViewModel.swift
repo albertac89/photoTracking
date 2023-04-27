@@ -10,14 +10,14 @@ import Foundation
 import CoreLocation
 
 protocol PhotoTrackingViewModelProtocol: ObservableObject {
-    var photoList: [FlickrImage] { get }
+    var photoList: [ImageModel] { get }
     var buttonText: String { get }
     var isTracking: Bool { get }
     func toggleTracking()
 }
 
 class PhotoTrackingViewModel {
-    @Published var photoList = [FlickrImage]()
+    @Published var photoList = [ImageModel]()
     @Published var buttonText: String = "Start"
     @Published var isTracking: Bool = false
     private var service: APIServiceProtocol
@@ -59,26 +59,27 @@ private extension PhotoTrackingViewModel {
     /// - Parameters:
     ///     - coordinate: Lat, Lon.
     func fetchImages(with coordinate: CLLocationCoordinate2D) {
-        service.fetchImages(lat: coordinate.latitude, lon: coordinate.longitude)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    break
-                }
-            } receiveValue: { images in
-                self.addPhotos(images: images)
+        let fetchImagesPublisher = service.fetchImages(lat: coordinate.latitude, lon: coordinate.longitude)
+        let downloadImagePublisher = service.downloadImagePublisher(fetchImagesPublisher: fetchImagesPublisher)
+        
+        downloadImagePublisher.sink { completion in
+            switch completion {
+            case .finished:
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
+                break
             }
-            .store(in: &serviceSubscribers)
+        } receiveValue: { [weak self] images in
+            self?.addPhotos(images: images)
+        }.store(in: &serviceSubscribers)
     }
 
     /// Load images to the list avoiding duplicates
     ///
     /// - Parameters:
-    ///     - images: Images to be added.
-    func addPhotos(images: [FlickrImage]) {
+    ///     - newImages: Images to be added.
+    func addPhotos(images: [ImageModel]) {
         images.forEach { newImage in
             if !photoList.contains(where: { $0.id == newImage.id }) {
                 photoList.insert(newImage, at: 0)
