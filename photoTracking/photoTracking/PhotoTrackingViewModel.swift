@@ -12,16 +12,18 @@ import CoreLocation
 protocol PhotoTrackingViewModelProtocol: ObservableObject {
     var photoList: [FlickrImage] { get }
     var buttonText: String { get }
+    var isTracking: Bool { get }
     func toggleTracking()
 }
 
 class PhotoTrackingViewModel {
     @Published var photoList = [FlickrImage]()
     @Published var buttonText: String = "Start"
-    private var isTracking = false
+    @Published var isTracking: Bool = false
     private var service: APIServiceProtocol
     private var locationDataManager: LocationDataManagerProtocol
-    private var subscribers = Set<AnyCancellable>()
+    private var serviceSubscribers = Set<AnyCancellable>()
+    private var locationManagerSubscribers = Set<AnyCancellable>()
     
     /// PhotoTracking view model
     ///
@@ -69,7 +71,7 @@ private extension PhotoTrackingViewModel {
             } receiveValue: { images in
                 self.addPhotos(images: images)
             }
-            .store(in: &subscribers)
+            .store(in: &serviceSubscribers)
     }
 
     /// Load images to the list avoiding duplicates
@@ -91,12 +93,13 @@ private extension PhotoTrackingViewModel {
     func bind(to locationDataManager: LocationDataManagerProtocol) {
         locationDataManager.signal
             .sink { [weak self] in self?.handle(state: $0) }
-            .store(in: &subscribers)
+            .store(in: &locationManagerSubscribers)
     }
 
     /// Remove the subscribers
     func unbind() {
-        subscribers.removeAll()
+        serviceSubscribers.removeAll()
+        locationManagerSubscribers.removeAll()
     }
 
     /// Handles the location data manager changes that affects this view model
@@ -106,7 +109,6 @@ private extension PhotoTrackingViewModel {
     func handle(state: LocationDataManagerEventState) {
         switch state {
         case .newLocation(let coordinate):
-            print(coordinate)
             fetchImages(with: coordinate)
         case .failure(let error):
             print(error)

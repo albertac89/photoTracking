@@ -24,6 +24,8 @@ struct MainView<Model>: View where Model: PhotoTrackingViewModelProtocol {
                 Button(viewModel.buttonText) {
                     viewModel.toggleTracking()
                 }
+                .foregroundColor(.black)
+                .fontWeight(.medium)
             }
         }
     }
