@@ -21,7 +21,7 @@ struct MainView<Model>: View where Model: PhotoTrackingViewModelProtocol {
             ZStack {
                 if viewModel.photoList.isEmpty {
                     VStack {
-                        Text("Tap the Start button to get the tracking images")
+                        Text("Tap the Start button to get the tracking images and start moving!")
                             .multilineTextAlignment(.center)
                             .fontWeight(.medium)
                             .padding()
