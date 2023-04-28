@@ -24,11 +24,11 @@ final class PhotoTrackingViewModelTests: XCTestCase {
     func test_toggleTracking() throws {
         let sut = try XCTUnwrap(sut)
 
-        XCTAssertEqual(sut.buttonText, "Start")
+        XCTAssertEqual(sut.isTracking, false)
         sut.toggleTracking()
-        XCTAssertEqual(sut.buttonText, "Stop")
+        XCTAssertEqual(sut.isTracking, true)
         sut.toggleTracking()
-        XCTAssertEqual(sut.buttonText, "Start")
+        XCTAssertEqual(sut.isTracking, false)
     }
     
     func test_fetchImages_toggleTracking_start() throws {

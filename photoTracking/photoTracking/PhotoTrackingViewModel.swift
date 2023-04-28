@@ -11,14 +11,12 @@ import CoreLocation
 
 protocol PhotoTrackingViewModelProtocol: ObservableObject {
     var photoList: [ImageModel] { get }
-    var buttonText: String { get }
     var isTracking: Bool { get }
     func toggleTracking()
 }
 
 class PhotoTrackingViewModel {
     @Published var photoList = [ImageModel]()
-    @Published var buttonText: String = "Start"
     @Published var isTracking: Bool = false
     private var service: APIServiceProtocol
     private var locationDataManager: LocationDataManagerProtocol
@@ -49,7 +47,6 @@ extension PhotoTrackingViewModel: PhotoTrackingViewModelProtocol {
         } else {
             isTracking = locationDataManager.startTracking()
         }
-        buttonText = isTracking ? "Stop" : "Start"
     }
 }
 
