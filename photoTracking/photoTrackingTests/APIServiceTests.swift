@@ -20,7 +20,16 @@ final class APIServiceTests: XCTestCase {
             XCTFail("Mock response not loaded")
             return
         }
+        guard let photoMock = MockedData.forFile(name: "photo", fileExtension: "jpg") else {
+            XCTFail("Mock image not loaded")
+            return
+        }
         URLProtocolMock.mockData["/services/rest"] = accountsListMock
+        DataImageMock.flickrImageMockService.forEach {photo in
+            if let path = photo.url?.relativePath {
+                URLProtocolMock.mockData[path] = photoMock
+            }
+        }
         sut = APIService(client: client)
     }
 
@@ -43,27 +52,25 @@ final class APIServiceTests: XCTestCase {
 
         wait(for: [expectation], timeout: 1)
         
-        XCTAssertEqual(photos, FlickrImageMock.arrayService)
+        XCTAssertEqual(photos, DataImageMock.flickrImageMockService)
     }
     
     func test_downloadImagePublisher() throws {
-        //https://farm2.staticflickr.com/1526/24947572265_43208b06a0.jpg
-        //staticflickr
-        //cridar al la url aqui directament amb urlsession del apiservice i veure com arreglau
         let sut = try XCTUnwrap(sut)
         let expectation = XCTestExpectation()
-        let fetchImagesPublisher = sut.fetchImages(lat: LocationDataManagerMock.coordinate.latitude, lon: LocationDataManagerMock.coordinate.longitude)
+        let fetchImagesPublisher = sut.fetchImages(lat: LocationDataManagerMock.coordinate.latitude,
+                                                   lon: LocationDataManagerMock.coordinate.longitude)
+        let downloadImagePublisher = sut.downloadImagePublisher(fetchImagesPublisher: fetchImagesPublisher)
         
         var photos = [ImageModel]()
-        sut.downloadImagePublisher(fetchImagesPublisher: fetchImagesPublisher)
-            .sink { completion in
-                expectation.fulfill()
-            } receiveValue: { photosMock in
-                photos = photosMock
-            }.store(in: &cancellables)
+        downloadImagePublisher.sink { completion in
+            expectation.fulfill()
+        } receiveValue: { photosMock in
+            photos = photosMock
+        }.store(in: &cancellables)
         
-        wait(for: [expectation], timeout: 5)
+        wait(for: [expectation], timeout: 1)
         
-        XCTAssertEqual(photos, ImageModelMock.arrayService)
+        XCTAssertEqual(photos, DataImageMock.imageModelMockService)
     }
 }

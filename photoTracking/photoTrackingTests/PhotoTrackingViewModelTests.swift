@@ -39,7 +39,7 @@ final class PhotoTrackingViewModelTests: XCTestCase {
         XCTAssertEqual(locationDataManager.startTrackingCount, 0)
         XCTAssertEqual(locationDataManager.stopTrackingCount, 0)
         sut.toggleTracking()
-        XCTAssertEqual(sut.photoList, ImageModelMock.array.reversed())
+        XCTAssertEqual(sut.photoList, DataImageMock.imageModelMock.reversed())
         XCTAssertEqual(apiService.fetchImagesCount, 1)
         XCTAssertEqual(locationDataManager.startTrackingCount, 1)
         XCTAssertEqual(locationDataManager.stopTrackingCount, 0)
@@ -49,7 +49,7 @@ final class PhotoTrackingViewModelTests: XCTestCase {
         let sut = try XCTUnwrap(sut)
 
         sut.toggleTracking()
-        XCTAssertEqual(sut.photoList, ImageModelMock.array.reversed())
+        XCTAssertEqual(sut.photoList, DataImageMock.imageModelMock.reversed())
         XCTAssertEqual(apiService.fetchImagesCount, 1)
         XCTAssertEqual(locationDataManager.startTrackingCount, 1)
         XCTAssertEqual(locationDataManager.stopTrackingCount, 0)
@@ -69,7 +69,7 @@ final class PhotoTrackingViewModelTests: XCTestCase {
         sut.toggleTracking() // Start
         sut.toggleTracking() // Stop
         sut.toggleTracking() // Start - as the mock service allways returns the same photos they will be already on the list
-        XCTAssertEqual(sut.photoList, ImageModelMock.array.reversed())
+        XCTAssertEqual(sut.photoList, DataImageMock.imageModelMock.reversed())
         XCTAssertEqual(apiService.fetchImagesCount, 2)
         XCTAssertEqual(locationDataManager.startTrackingCount, 2)
         XCTAssertEqual(locationDataManager.stopTrackingCount, 1)

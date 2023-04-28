@@ -14,11 +14,11 @@ final class ApiServiceMock: APIServiceProtocol {
 
     func fetchImages(lat: Double, lon: Double) -> AnyPublisher<[FlickrImage], Error> {
         fetchImagesCount += 1
-        return Just(FlickrImageMock.array).setFailureType(to: Error.self).eraseToAnyPublisher()
+        return Just(DataImageMock.flickrImageMock).setFailureType(to: Error.self).eraseToAnyPublisher()
     }
     
     func downloadImagePublisher(fetchImagesPublisher: AnyPublisher<[FlickrImage], Error>) -> AnyPublisher<Publishers.Collect<Publishers.MergeMany<AnyPublisher<ImageModel, Error>>>.Output, Error> {
         downloadImagePublisher += 1
-        return Just(ImageModelMock.array).setFailureType(to: Error.self).eraseToAnyPublisher()
+        return Just(DataImageMock.imageModelMock).setFailureType(to: Error.self).eraseToAnyPublisher()
     }
 }
